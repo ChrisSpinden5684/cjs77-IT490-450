@@ -20,3 +20,5 @@ wget https://github.com/MattToegel/IT490/archive/refs/heads/master.zip
 unzip master.zip
 cd IT490-master/
 composer update
+
+curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key=tskey-auth-kkjULnt1ru11CNTRL-PahDbksxXmhsEG46HaNbmh8UxqZsK8BH --hostname=dev-mq-404notfounders
