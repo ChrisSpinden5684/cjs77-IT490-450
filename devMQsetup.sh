@@ -9,15 +9,6 @@ sudo apt install composer
 sudo apt install rabbitmq-server
 sudo apt install net-tools
 
-sudo useradd cjs77
-sudo useradd hc477
-sudo useradd hs723
-sudo useradd jam374
-sudo useradd ry26
-
-# Admin must set passwords after script completion
-# Admin is lazy
-
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
 
@@ -25,11 +16,9 @@ sudo apt install openssh-server
 sudo systemctl enable openssh-server
 sudo systemctl start openssh-server
 
-curl -fsSL https://tailscale.com/install.sh | sudo sh
-
 wget https://github.com/MattToegel/IT490/archive/refs/heads/master.zip
 unzip master.zip
 cd IT490-master/
 composer update
 
-curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key=tskey-auth-kvSDyhD6Hm11CNTRL-ccWheL1wHtYJde3iFGkEtYagD57QTa6M \ --hostname dev-mq-404notfounders
+curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key=tskey-auth-kkjULnt1ru11CNTRL-PahDbksxXmhsEG46HaNbmh8UxqZsK8BH \  --hostname=dev-mq-404notfounders
