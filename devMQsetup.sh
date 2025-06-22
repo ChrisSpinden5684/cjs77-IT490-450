@@ -23,8 +23,19 @@ composer update
 
 curl -fsSL https://tailscale.com/install.sh | sh
 
+# Adds users for every team member
+sudo useradd cjs77
+sudo useradd hc477
+sudo useradd hs723
+sudo useradd jam374
+sudo useradd ry26
+
+# Enables and starts the rsyslog service
 sudo systemctl enable rsyslog.service
 sudo systemctl start rsyslog.service
 
+
+# Firewall rules for allowing rsyslog traffic and ssh traffic
 sudo ufw allow 514/tcp
+sudo ufw allow 22
 

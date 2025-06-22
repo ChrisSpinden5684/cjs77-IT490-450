@@ -21,4 +21,10 @@ unzip master.zip
 cd IT490-master/
 composer update
 
+sudo useradd cjs77
+sudo useradd hc477
+sudo useradd hs723
+sudo useradd jam374
+sudo useradd ry26
+
 curl -fsSL https://tailscale.com/install.sh | sh
