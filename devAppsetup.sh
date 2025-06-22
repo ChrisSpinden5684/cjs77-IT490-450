@@ -2,15 +2,15 @@
 
 sudo apt update
 sudo apt upgrade
-sudo apt install zip
-sudo apt install php
+sudo apt install zip -y
+sudo apt install php -y
 sudo apt install nano
 sudo apt install composer
-sudo apt install rabbitmq-server
 sudo apt install net-tools
 
-sudo systemctl enable rabbitmq-server
-sudo systemctl start rabbitmq-server
+udo apt install apache2
+sudo systemctl enable apache2
+sudo systemctl start apache2
 
 sudo apt install openssh-server
 sudo systemctl enable openssh-server
@@ -22,9 +22,3 @@ cd IT490-master/
 composer update
 
 curl -fsSL https://tailscale.com/install.sh | sh
-
-sudo systemctl enable rsyslog.service
-sudo systemctl start rsyslog.service
-
-sudo ufw allow 514/tcp
-
