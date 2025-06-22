@@ -32,4 +32,3 @@ unzip master.zip
 cd IT490-master/
 composer update
 
-curl -fsSL https://tailscale.com/install.sh | sh && sudo tailscale up --auth-key=tskey-auth-kvSDyhD6Hm11CNTRL-ccWheL1wHtYJde3iFGkEtYagD57QTa6M \ --hostname dev-mq-404notfounders
