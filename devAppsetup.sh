@@ -8,9 +8,12 @@ sudo apt install nano
 sudo apt install composer
 sudo apt install net-tools
 
-udo apt install apache2
+sudo apt install apache2
 sudo systemctl enable apache2
 sudo systemctl start apache2
+
+sudo apt install nginx
+sudo systemctl enable nginx 
 
 sudo apt install openssh-server
 sudo systemctl enable openssh-server
