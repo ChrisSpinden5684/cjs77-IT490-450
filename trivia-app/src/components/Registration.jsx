@@ -5,7 +5,7 @@ function Registration(){
     return (
         <div className="main-container">
             <div class="form-container">
-            <h1>Registration</h1>
+            <h2>Registration</h2>
             <form>
                 <input type="text" placeholder="Email" />
                 <input type="password" placeholder="Password" />
