@@ -4,13 +4,14 @@ function ProfilePanel(){
     return (
         <div className="main-container">
             <div class="form-container">
-            <h1>Profile</h1>
+            <h2>Profile</h2>
             <form id="profile-form">
                 <input type="email" placeholder="Email" required />
                 <input type="text" name="username" placeholder="Username" required />
                 <input type="password" placeholder="Password" required />
+                <button class="opacity">SUBMIT</button>
             </form>
-        </div>
+            </div>
         </div>
     );
 }
