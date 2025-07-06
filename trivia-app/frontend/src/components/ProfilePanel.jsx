@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
 function ProfilePanel(){
+
     return (
         <div className="main-container">
             <div class="form-container">
