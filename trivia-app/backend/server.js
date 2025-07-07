@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 const app = express();
 const PORT = 5000;
@@ -9,6 +10,8 @@ let submissions = [];
 
 app.use(cors());
 app.use(express.json());
+// Needed for VM configuration, Comment out below line when developing on local host
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 // POST route to receive registration data
 app.post('/api/register', async (req, res) => {
@@ -34,6 +37,7 @@ app.post('/api/login', (req, res) => {
 });
 
 // GET route to display all submissions
+// Test cases, take out eventually
 app.get('/submissions', (req, res) => {
   res.send(`
     <h1>All Registrations</h1>
@@ -57,6 +61,9 @@ app.get("/api/questions", (req, res) => {
     }
   ];
   res.json(questions);
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
 app.listen(PORT, () => {
