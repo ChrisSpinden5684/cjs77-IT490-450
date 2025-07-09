@@ -1,19 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
-const path = require('path');
+//const path = require('path');
 
 const app = express();
 const PORT = 5000;
 
-let submissions = [];
+//let submissions = [];
 
 app.use(cors());
 app.use(express.json());
 // Needed for VM configuration, Comment out below line when developing on local host
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+// app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 // POST route to receive registration data
+
+/*
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -66,6 +68,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
+*/
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
