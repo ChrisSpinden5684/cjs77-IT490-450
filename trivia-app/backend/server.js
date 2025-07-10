@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
+const sendToVM = require('./producer');
 //const path = require('path');
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(express.json());
 
 // POST route to receive registration data
 
-/*
+
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -23,6 +24,7 @@ app.post('/api/register', async (req, res) => {
     console.log('Received registration data:', { username, email, hashPass });
     const data = [username, email, hashPass];
     submissions.push(data);
+    await sendToVM('dbvm', data);
     res.json({ message: `Registration received for ${username}` });
   }
   catch(error){
@@ -31,11 +33,20 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-app.post('/api/login', (req, res) => {
-  const formData = req.body;
-  submissions.push(formData);
-  console.log('Received Login:', formData);
-  res.json({ message: `Login received for ${formData.email}` });
+app.post('/api/login', async (req, res) => {
+  try{
+    const formData = req.body;
+    submissions.push(formData);
+    console.log('Received Login:', formData);
+    await sendToVM('dbvm', formData);
+    res.json({ message: `Login received for ${formData.email}` });
+  }
+  catch(error){
+    console.error("Error logging in:", error);
+    //Alert user
+    //Reload page
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 // GET route to display all submissions
@@ -64,11 +75,13 @@ app.get("/api/questions", (req, res) => {
   ];
   res.json(questions);
 });
+/*
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
-
 */
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
