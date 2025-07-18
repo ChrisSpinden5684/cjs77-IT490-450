@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
-const sendToVM = require('./producer');
-//const path = require('path');
+//Edit to correct path
+const { sendToVM } = require('./helperfiles/producer');
+const { sendToVMWithReply } = require('./messageClient');
 
 const app = express();
 const PORT = 5000;
@@ -11,41 +12,76 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
-// Needed for VM configuration, Comment out below line when developing on local host
-// app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-// POST route to receive registration data
-
 
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
   try {
     const hashPass = await bcrypt.hash(password, 10);
     console.log('Received registration data:', { username, email, hashPass });
-    const data = [username, email, hashPass];
-    submissions.push(data);
-    await sendToVM('dbvm', data);
-    res.json({ message: `Registration received for ${username}` });
-  }
-  catch(error){
-    console.error("Error hashing password:", error);
+
+    const payload = {
+      type: 'register',
+      username,
+      email,
+      password: hashPass
+    };
+
+    const response = await sendToVMWithReply('dbvm', payload);
+
+    if (response.success) {
+      res.json({ message: `Registration successful for ${username}` });
+    } else {
+      res.status(400).json({ error: response.error || 'Registration failed' });
+    }
+
+  } catch (error) {
+    console.error("Registration error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
 app.post('/api/login', async (req, res) => {
-  try{
-    const formData = req.body;
-    submissions.push(formData);
-    console.log('Received Login:', formData);
-    await sendToVM('dbvm', formData);
-    res.json({ message: `Login received for ${formData.email}` });
-  }
-  catch(error){
-    console.error("Error logging in:", error);
-    //Alert user
-    //Reload page
+  const { email, password } = req.body;
+  const payload = {
+      type: 'login',
+      email,
+      password
+    };
+  try {
+    const response = await sendToVMWithReply('dbvm', payload);
+
+    if (response.success) {
+      res.json({ message: 'Login successful', token: response.token });
+    } else {
+      res.status(401).json({ error: response.error || "Login failed" });
+    }
+  } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post('/api/profile/update', async (req, res) => {
+  const { username, email, bio } = req.body;
+
+  try {
+    const payload = {
+      type: 'updateProfile',
+      username,
+      email,
+      bio
+    };
+    const response = await sendToVMWithReply('dbvm', payload);
+
+    if (response.success) {
+      res.json({ message: 'Profile updated successfully' });
+    } else {
+      res.status(400).json({ error: response.error || 'Profile update failed' });
+    }
+
+  } catch (err) {
+    console.error('Error updating profile:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
