@@ -12,7 +12,7 @@ async function sendToVM(targetVM, payload) {
   channel.publish(exchange, targetVM, message, {
     headers: {
       destination: targetVM,     
-      source: 'vm-sender-1',     
+      source: 'your-vm-name',     
     }
   });
 
