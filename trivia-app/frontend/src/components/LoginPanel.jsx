@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRef } from 'react';
 import { useState } from "react";
+import Logout from "./Logout.jsx";
 
 function LoginPanel(){
 
@@ -37,8 +38,8 @@ const inputRef = useRef(null);
             <div className="login-container">
             <h2>Login to Trivia</h2>
             <form onSubmit={handleSubmit}>
-                 <input type="text" name="email" placeholder="Email" value={inputs.email || ""} onChange={handleChange} />
-          <input type="password" name="password" placeholder="Password" value={inputs.password || ""} onChange={handleChange} />
+                <input type="text" name="email" placeholder="Email" value={inputs.email || ""} onChange={handleChange} />
+                <input type="password" name="password" placeholder="Password" value={inputs.password || ""} onChange={handleChange} />
                 <button type="submit">Login</button>
             </form>
         </div>

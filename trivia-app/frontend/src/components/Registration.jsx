@@ -34,7 +34,7 @@ function Registration() {
 
   return (
     <div className="main-container">
-      <div className="form-container">
+      <div className="login-container">
         <h2>Registration</h2>
         <form onSubmit={handleSubmit}>
           <input type="text" name="email" placeholder="Email" value={inputs.email || ""} onChange={handleChange} />

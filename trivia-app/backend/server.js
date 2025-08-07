@@ -1,9 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const cookie = require('cookie-parser');
+//const jwt_secret = JWT_SECRET;
 //Edit to correct path
 const { sendToVM } = require('./helperfiles/producer');
-const { sendToVMWithReply } = require('./messageClient');
+const { sendToVMWithReply } = require('./helperfiles/replymessage');
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = 5000;
@@ -12,6 +16,7 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -40,6 +45,31 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+app.get('api/user', (req, res) => {
+  const token = req.cookies.token;
+  // If token does not exist
+  if(!token)
+    return res.status(401).json({error: 'Unauthorized Connection, aborting'});
+  try {
+    const decodeToken = jwt.verify(token, jwt_secret);
+    res.json({ username : decodeToken.username, role: decodeToken.role })
+  } catch (err) {
+    console.log(err)
+    return res.status(401).json({ message : 'Invalid or expired token'})
+  }
+});
+
+app.post('/api/logout', (req, res) => {
+  try {
+    res.clearCookie('token');
+    console.log('Token being cleared')
+    res.json({ message : 'Logout Successful, redirecting'})
+    //redirect user to login page
+  } catch(err){
+    console.error(err);
+  }
+});
+
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   const payload = {
@@ -52,6 +82,20 @@ app.post('/api/login', async (req, res) => {
 
     if (response.success) {
       res.json({ message: 'Login successful', token: response.token });
+       const token = jwt.sign(
+        { username: response.username, role: response.role },
+        JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: false, // Set false for local dev without HTTPS
+        sameSite: 'Strict',
+        maxAge: 3600000, // 1 hour
+      });
+      // give client a java web token
+      // redirect user to login
     } else {
       res.status(401).json({ error: response.error || "Login failed" });
     }
@@ -111,11 +155,6 @@ app.get("/api/questions", (req, res) => {
   ];
   res.json(questions);
 });
-/*
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-});
-*/
 
 
 app.listen(PORT, () => {

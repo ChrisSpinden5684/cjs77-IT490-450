@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 
 function ProfilePanel(){
@@ -8,7 +8,7 @@ const inputRef = useRef(null);
 
  const handleSubmit = async (e) => {
   e.preventDefault();
-
+  
   try {
     const response = await fetch('http://localhost:5000/api/profile/update', {
       method: 'POST',
@@ -34,13 +34,13 @@ const inputRef = useRef(null);
 
     return (
         <div className="main-container">
-            <div class="form-container">
+            <div className="login-container">
             <h2>Profile</h2>
-            <form id="profile-form">
-                <input type="text" name="email" placeholder="Email" value={inputs.email || ""} onChange={handleChange} />
-                <input type="text" name="username" placeholder="Username" value={inputs.username || ""} onChange={handleChange} />
-                <input type="password" name="password" placeholder="Password" value={inputs.password || ""} onChange={handleChange} />
-                <input type="password" name="confpass" placeholder="Confirm Password" value={inputs.confpass || ""} onChange={handleChange} />
+            <form >
+                <input type="text" name="email" placeholder="Email" value={inputs.email || ""} onChange={handleChange} required/>
+                <input type="text" name="username" placeholder="Username" value={inputs.username || ""} onChange={handleChange} required/>
+                <input type="password" name="password" placeholder="Password" value={inputs.password || ""} onChange={handleChange} required/>
+                <input type="password" name="confpass" placeholder="Confirm Password" value={inputs.confpass || ""} onChange={handleChange} required/>
                 <button className="opacity">SUBMIT</button>
             </form>
             </div>

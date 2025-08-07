@@ -13,10 +13,12 @@ import Login from "./routes/Login"
 import Profile from "./routes/Profile"
 import Register from "./routes/Register"
 import Navbar from "./components/Navbar";
+import Logout from "./components/Logout.jsx";
 import App from "./App";
 
 const AppLayout = () => (
     <>
+    <Logout />
     <Navbar />
     <Outlet />
     </>
@@ -28,11 +30,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home/>,
+        element: <Login/>,
       },
       {
-        path: "Login",
-        element: <Login/>,
+        path: "LandingPage",
+        element: <Home/>,
       },
       {
         path: "Register",
