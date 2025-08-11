@@ -5,8 +5,11 @@ let connection, channel;
 
 async function setupRabbitMQ() {
   if (!channel) {
-    connection = await amqp.connect('amqp://CENTRAL_VM_IP');
+    connection = await amqp.connect('amqp://CENTRAL_VM_IP'); // replace with your actual address
     channel = await connection.createChannel();
+
+    // Make sure the exchange exists
+    await channel.assertExchange('vm_exchange', 'direct', { durable: false });
   }
   return channel;
 }
@@ -15,6 +18,7 @@ async function sendToVMWithReply(targetVM, payload) {
   await setupRabbitMQ();
 
   const correlationId = uuidv4();
+  // Create a temporary exclusive queue for replies
   const replyQueue = await channel.assertQueue('', { exclusive: true });
 
   return new Promise((resolve, reject) => {
@@ -33,7 +37,9 @@ async function sendToVMWithReply(targetVM, payload) {
       { noAck: true }
     );
 
-    channel.sendToQueue(
+    // Publish to the exchange with the routing key equal to targetVM
+    channel.publish(
+      'vm_exchange',
       targetVM,
       Buffer.from(JSON.stringify(payload)),
       {

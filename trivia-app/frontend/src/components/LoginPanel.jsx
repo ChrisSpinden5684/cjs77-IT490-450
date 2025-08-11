@@ -15,7 +15,7 @@ function LoginPanel() {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', 
+        //credentials: 'include', 
         body: JSON.stringify(inputs),
       });
 
@@ -24,7 +24,7 @@ function LoginPanel() {
 
       if (response.ok) {
         alert(`Welcome!`);
-        navigate('/dashboard'); 
+        navigate('/LandingPage'); 
       } else {
         alert(`Error: ${data.error || "Login failed"}`);
       }

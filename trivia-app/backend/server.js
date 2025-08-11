@@ -5,9 +5,9 @@ const jwt = require('jsonwebtoken');
 const cookie = require('cookie-parser');
 //const jwt_secret = JWT_SECRET;
 //Edit to correct path
-const { sendToVM } = require('./helperfiles/producer');
+//const { sendToVM } = require('./helperfiles/producer');
 const { sendToVMWithReply } = require('./helperfiles/replymessage');
-const cookieParser = require("cookie-parser");
+//const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = 5000;
@@ -16,7 +16,7 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser());
+//app.use(cookieParser());
 
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -44,7 +44,7 @@ app.post('/api/register', async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
+/*
 app.get('api/user', (req, res) => {
   const token = req.cookies.token;
   // If token does not exist
@@ -58,7 +58,7 @@ app.get('api/user', (req, res) => {
     return res.status(401).json({ message : 'Invalid or expired token'})
   }
 });
-
+*/
 app.post('/api/logout', (req, res) => {
   try {
     res.clearCookie('token');
@@ -72,6 +72,7 @@ app.post('/api/logout', (req, res) => {
 
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
+  console.log('Received login data:', { email, password });
   const payload = {
       type: 'login',
       email,
@@ -82,6 +83,7 @@ app.post('/api/login', async (req, res) => {
 
     if (response.success) {
       res.json({ message: 'Login successful', token: response.token });
+      /*
        const token = jwt.sign(
         { username: response.username, role: response.role },
         JWT_SECRET,
@@ -94,8 +96,10 @@ app.post('/api/login', async (req, res) => {
         sameSite: 'Strict',
         maxAge: 3600000, // 1 hour
       });
+      res.json({ message: 'Login successful' });
       // give client a java web token
       // redirect user to login
+      */
     } else {
       res.status(401).json({ error: response.error || "Login failed" });
     }

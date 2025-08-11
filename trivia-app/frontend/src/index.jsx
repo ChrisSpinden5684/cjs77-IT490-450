@@ -16,6 +16,7 @@ import Navbar from "./components/Navbar";
 import Logout from "./components/Logout.jsx";
 import App from "./App";
 import ProtectedRoute from "./components/ProtectedRoute";
+import CreateQuestion from "./components/CreateQuestionManualForm";
 
 const AppLayout = () => (
     <>
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "Register",
         element: <Register/>,
+      },
+      {
+        path: "Create Question Manual",
+        element: <CreateQuestion/>,
       },
       {
         path: "Profile",

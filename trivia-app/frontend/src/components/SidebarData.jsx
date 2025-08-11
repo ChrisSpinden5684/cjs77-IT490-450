@@ -8,6 +8,12 @@ export const getSideBarData = (isAuthenticated) => {
       icon: AiIcons.AiFillHome,
       cName: "nav-text",
     },
+    {
+      title: "Create Question",
+      path: "/CreateQuestionMan",
+      icon: AiIcons.AiFillHome,
+      cName: "nav-text",
+    },
   ];
 
   if (!isAuthenticated) {
