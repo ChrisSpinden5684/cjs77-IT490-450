@@ -16,7 +16,10 @@ import Navbar from "./components/Navbar";
 import Logout from "./components/Logout.jsx";
 import App from "./App";
 import ProtectedRoute from "./components/ProtectedRoute";
-import CreateQuestion from "./components/CreateQuestionManualForm";
+import CreateQuestion from "./components/CreateQuestionForm";
+import CreateQuestionManual from "./routes/CreateQuestionMan.jsx";
+import UpdateQuestion from "./components/UpdateQuestionForm";
+import Participate from "./components/ParticipationForm";
 
 const AppLayout = () => (
     <>
@@ -32,27 +35,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Login/>,
+        element: <Home/>,
       },
       {
-        path: "LandingPage",
-        element: <Home/>,
+        path: "Login",
+        element: <Login/>,
       },
       {
         path: "Register",
         element: <Register/>,
       },
       {
-        path: "Create Question Manual",
+        path: "CreateQuestion",
         element: <CreateQuestion/>,
       },
       {
+        path: "CreateQuestionManual",
+        element: <CreateQuestionManual/>,
+      },
+      {
+        path: "UpdateQuestion",
+        element: <UpdateQuestion/>,
+      },
+      {
+        path: "Participation",
+        element: <Participate/>,
+      },
+      {
         path: "Profile",
-        element: (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        ),
+        element: <Profile />,
       },
     ],
   },

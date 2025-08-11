@@ -116,7 +116,7 @@ export default function CreateQuestionManualForm() {
         return;
       }
 
-      const response = await fetch("http://localhost:5001/api/questions/create-bulk", {
+      const response = await fetch("http://localhost:5000/api/questions/create-bulk", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
